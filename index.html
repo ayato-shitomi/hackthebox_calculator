@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+<body>
+    <style>
+        body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 16px;
+        line-height: 1.5;
+        padding: 3%;
+        }
+
+        h1 {
+        font-size: 32px;
+        margin-bottom: 16px;
+        }
+
+        table#a {
+        margin-bottom: 16px;
+        border-collapse: collapse;
+        width: fit-content;
+        }
+
+        table#c {
+        margin-bottom: 16px;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ffffff;
+        }
+
+        th {
+        background-color: #212121;
+        }
+
+        #hoge {
+        display: flex;
+        }
+
+        #hoge > * {
+        flex: 1;
+        margin-right: 16px;
+        }
+
+        #hoge > *:last-child {
+        margin-right: 0;
+        }
+
+        #res {
+        margin-top: 16px;
+        padding: 16px;
+        background-color: #212121;
+        display: inline-block;
+        border-radius: 8px;
+        }
+
+        #res > * {
+        margin-bottom: 8px;
+        }
+
+        #rank {
+        font-size: 32px;
+        }
+
+        #per {
+        font-size: 24px;
+        }
+
+        .codeblock {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 16px;
+        border-radius: 8px;
+        }
+        
+        #explain {
+            width: 90%;
+        }
+
+    </style>
+
+    
+    <h1>HackTheBox Rating Calculator</h1>
+    <br>
+
+    <div id="hoge">
+        <form action="#" oninput="getValFromForm()">
+            <table id="c">
+                <tr><td>ActiveSystemOwns</td><td><input type="number" id="ActiveSystemOwns"></td></tr>
+                <tr><td>ActiveUserOwns</td><td><input type="number" id="ActiveUserOwns"></td></tr>
+                <tr><td>ActiveChallengeOwns</td><td><input type="number" id="ActiveChallengeOwns"></td></tr>
+                <tr><td>activeMachines</td><td><input type="number" id="activeMachines" value="20"></td></tr>
+                <tr><td>activeChallenges</td><td><input type="number" id="activeChallenges" value="150"></td></tr>
+            </table>
+        </form>
+
+        <div id="res">
+            <div id="rank">None</div>
+            <div id="per">0%</div>
+        </div>
+    </div>
+    
+    <div id="explain">
+        <h1>How it works</h1>
+        <p class="codeblock">(ActiveSystemOwns + (ActiveUserOwns / 2) + (ActiveChallengeOwns / 10)) / (activeMachines + (activeMachines / 2) + (activeChallenges / 10)) * 100</p>
+        <table id="a">
+        <tr><td>~5%</td><td>Noob</td></tr>
+        <tr><td>~20%</td><td>Script Kiddie</td></tr>
+        <tr><td>~45%</td><td>Hacker</td></tr>
+        <tr><td>~70%</td><td>Elite Hacker</td></tr>
+        <tr><td>~90%</td><td>Guru</td></tr>
+        <tr><td>~100%</td><td>Omniscient</td></tr>
+        </table>
+        <p>For more infomation: <a href="https://help.hackthebox.com/en/articles/5185158-introduction-to-hack-the-box">https://help.hackthebox.com/en/articles/5185158-introduction-to-hack-the-box</a></p>
+    </div>
+    <br>
+
+	<script>
+        function getValFromForm() {
+            const activeSystemOwnsVal = parseInt(document.getElementById('ActiveSystemOwns').value);
+            const activeUserOwnsVal = parseInt(document.getElementById('ActiveUserOwns').value);
+            const activeChallengeOwnsVal = parseInt(document.getElementById('ActiveChallengeOwns').value);
+            const activeMachinesVal = parseInt(document.getElementById('activeMachines').value);
+            const activeChallengesVal = parseInt(document.getElementById('activeChallenges').value);
+
+            const result = calcTheLevel(activeSystemOwnsVal, activeUserOwnsVal, activeChallengeOwnsVal, activeMachinesVal, activeChallengesVal);
+            let elmPer = document.getElementById("per");
+            elmPer.innerText = result + "%";
+            let elmRank = document.getElementById("rank");
+            let tmp = checkRank(result);
+            elmRank.innerText = checkRank(result);
+        }
+
+        function calcTheLevel(a, b, c, d, e) {
+            const total = ((a + (b / 2) + (c / 10)) / (d + (d / 2) + (e / 10)) * 100);
+            return (total.toFixed(2));
+        }
+
+        function checkRank(n) {
+            const ranks = [
+                { score: 5, rank: "Noob" },
+                { score: 20, rank: "Script Kiddie" },
+                { score: 45, rank: "Hacker" },
+                { score: 70, rank: "Elite Hacker" },
+                { score: 90, rank: "Guru" },
+                { score: 100, rank: "Omniscient" }
+            ];
+
+            for (let i = 0; i < ranks.length; i++) {
+                if (n <= ranks[i].score) {
+                    return ranks[i].rank;
+                }
+            }
+            return "Something went wrong";
+        }
+	</script>
+
+</body>
+
+</html>
