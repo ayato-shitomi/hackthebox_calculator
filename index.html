@@ -114,12 +114,13 @@
         <h1>How it works</h1>
         <p class="codeblock">(ActiveSystemOwns + (ActiveUserOwns / 2) + (ActiveChallengeOwns / 10)) / (activeMachines + (activeMachines / 2) + (activeChallenges / 10)) * 100</p>
         <table id="a">
-        <tr><td>~5%</td><td>Noob</td></tr>
-        <tr><td>~20%</td><td>Script Kiddie</td></tr>
-        <tr><td>~45%</td><td>Hacker</td></tr>
-        <tr><td>~70%</td><td>Elite Hacker</td></tr>
-        <tr><td>~90%</td><td>Guru</td></tr>
-        <tr><td>~100%</td><td>Omniscient</td></tr>
+            <tr><td>0%~</td><td>Noob</td></tr>
+            <tr><td>5%~</td><td>Script Kiddie</td></tr>
+            <tr><td>20%~</td><td>Hacker</td></tr>
+            <tr><td>45%~</td><td>Pro Hacker</td></tr>
+            <tr><td>70%~</td><td>Elite Hacker</td></tr>
+            <tr><td>90%~</td><td>Guru</td></tr>
+            <tr><td>=100%</td><td>Omniscient</td></tr>
         </table>
         <p>For more infomation: <a href="https://help.hackthebox.com/en/articles/5185158-introduction-to-hack-the-box">https://help.hackthebox.com/en/articles/5185158-introduction-to-hack-the-box</a></p>
     </div>
@@ -147,21 +148,14 @@
         }
 
         function checkRank(n) {
-            const ranks = [
-                { score: 5, rank: "Noob" },
-                { score: 20, rank: "Script Kiddie" },
-                { score: 45, rank: "Hacker" },
-                { score: 70, rank: "Elite Hacker" },
-                { score: 90, rank: "Guru" },
-                { score: 100, rank: "Omniscient" }
-            ];
-
-            for (let i = 0; i < ranks.length; i++) {
-                if (n <= ranks[i].score) {
-                    return ranks[i].rank;
-                }
-            }
-            return "Something went wrong";
+            if (0 <= n && n < 5) {return "Noob";}
+            if (5 <= n && n < 20) {return "Script Kiddie";}
+            if (20 <= n && n < 45) {return "Hacker";}
+            if (45 <= n && n < 70) {return "Pro Hacker";}
+            if (70 <= n && n < 90) {return "Elite Hacker";}
+            if (90 <= n && n < 100) {return "Guru";}
+            if (n == 100) {return "Omniscient";}
+            return "-";
         }
 	</script>
 
